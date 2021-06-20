@@ -14,16 +14,13 @@
 | birthday_year    | integer  | null: flase    |
 | birthday_month   | integer  | null: flase    |
 | birthday_day     | integer  | null: flase    |
-| introduction     | string   |                |
-| user_image       | string   | ActiveStorage  |
 
 ### Association
 
-- has_many :products
+- has_one :cards
+- has_many :items
 - has_many :comments
-- has_many :trades
-- belongs_to :shipping_adress
-- belongs_to :card
+- has_many :shipping_adresses
 
 
 ## cardsテーブル
@@ -33,60 +30,63 @@
 | card               | integer    | null: flase                      |
 | time_limit         | integer    | null: flase                      |
 | security           | integer    | null: flase                      |
-| user               | references | null: false, foreign_key: true   |
+| user_id            | references | null: false, foreign_key: true   |
 
 ### Association
 
 - belongs_to :user
 
 
-## shipping address
-
-| Column             | Type       | Options                          |
-| ------------------ | ---------- | ---------------------------------|
-| postal_code        | integer    | null: flase                      |
-| Prefectures        | text       | null: flase                      |
-| municipality       | text       | null: flase                      |
-| address            | text       | null: flase                      |
-| building           | text       | null: flase                      |
-| telephone_number   | integer    | null: flase                      |
-| user               | references | null: false, foreign_key: true   |
-| product            | references | null: false, foreign_key: true   |
-
-### Association
-
-- belongs_to :user
-
-
-## productsテーブル
+## itemsテーブル
 
 | Column              | Type       | Options                          |
 | ------------------- | ---------- | ---------------------------------|
-| title               | string     | null: flase                      |
 | image               | string     | ActiveStorage                    |
+| item_nam            | string     | null: flase                      |
 | appeal_point        | string     |                                  |
-| price               | integer    | null: flase                      |
 | category            | text       | null: flase                      |
 | status              | text       | null: flase                      |
 | shipping_charge     | text       | null: flase                      |
 | shipping_area       | text       | null: flase                      |
 | shipping_date       | text       | null: flase                      |
-| user                | references | null: false, foreign_key: true   |
+| price               | integer    | null: flase                      |
+| user_id             | references | null: false, foreign_key: true   |
 
 ### Association
 
 - belongs_to :user
+- has_many :comments
+- has_many :shipping addresses
+
+
+## shipping addresses
+
+| Column             | Type       | Options                          |
+| ------------------ | ---------- | ---------------------------------|
+| postal_code        | integer    | null: flase                      |
+| prefectures        | text       | null: flase                      |
+| municipality       | text       | null: flase                      |
+| address            | text       | null: flase                      |
+| building           | text       | null: flase                      |
+| telephone_number   | integer    | null: flase                      |
+| user_id            | references | null: false, foreign_key: true   |
+| item_id            | references | null: false, foreign_key: true   |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
 
 
 ## commentsテーブル
 
 | Column        | Type       | Options                          |
 | ------------- | ---------- | ---------------------------------|
-| text          | text       | null: flase                      |
-| user          | references | null: false, foreign_key: true   |
-| product       | references | null: false, foreign_key: true   |
+| comment       | text       | null: flase                      |
+| user_id       | references | null: false, foreign_key: true   |
+| item_id       | references | null: false, foreign_key: true   |
 
 ### Association
 
 - belongs_to :user
-- belongs_to :product
+- belongs_to :item
