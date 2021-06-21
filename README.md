@@ -45,7 +45,7 @@
 
 
 
-# purchase_informationテーブル（購入情報）
+## purchase_informationテーブル（購入情報）
 
 | Column              | Type       | Options                         |
 | ------------------- | ---------- | --------------------------------|
