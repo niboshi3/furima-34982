@@ -17,7 +17,7 @@
 ### Association
 
 - has_many :items
-- has_many :purchase
+- has_many :purchases
 
 
 
@@ -26,11 +26,11 @@
 | Column              | Type       | Options                          |
 | ------------------- | ---------- | ---------------------------------|
 | item_name           | string     | null: flase                      |
-| appeal_point        | string     | null: flase                      |
+| appeal_point        | text       | null: flase                      |
 | category_id         | integer    | null: flase                      |
 | status_id           | integer    | null: flase                      |
 | shipping_charge_id  | integer    | null: flase                      |
-| prefectures_id      | integer    | null: flase                      |
+| prefecture_id       | integer    | null: flase                      |
 | shipping_date_id    | integer    | null: flase                      |
 | price               | integer    | null: flase                      |
 | user                | references | null: false, foreign_key: true   |
@@ -43,7 +43,7 @@
 
 
 
-## purchase テーブル（購入情報）
+## purchases テーブル（購入情報）
 
 | Column              | Type       | Options                         |
 | ------------------- | ---------- | --------------------------------|
@@ -64,7 +64,7 @@
 | Column               | Type       | Options                          |
 | -------------------- | ---------- | ---------------------------------|
 | postal_code          | string     | null: flase                      |
-| prefectures_id       | integer    | null: flase                      |
+| prefecture_id        | integer    | null: flase                      |
 | municipality         | string     | null: flase                      |
 | address              | string     | null: flase                      |
 | building             | string     |                                  |
