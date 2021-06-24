@@ -59,7 +59,7 @@
 
 
 
-## shipping_addresses（配送先情報）
+## shipping_addressesテーブル（配送先情報）
 
 | Column               | Type       | Options                          |
 | -------------------- | ---------- | ---------------------------------|
@@ -77,14 +77,14 @@
 - belongs_to :purchase
 
 
-## commentsテーブル
+ ~~## commentsテーブル（コメント※今回は必須実装ではない~~ 
 
-| Column               | Type       | Options                          |
+~~| Column               | Type       | Options                          |
 | -------------------- | ---------- | ---------------------------------|
 | comment              | text       | null: flase                      |
-| purchase             | references | foreign_key: true                |
+| purchase             | references | foreign_key: true                |~~  
 
 
-### Association
+ ~~### Association~~ 
 
-- belongs_to :purchase
+ ~~- belongs_to :purchase~~ 
