@@ -60,3 +60,5 @@ end
 gem 'devise'
 
 gem 'rails-i18n'
+
+gem 'rspec-rails', '~> 4.0.0'
