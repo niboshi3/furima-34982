@@ -4,13 +4,25 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # 必須項目：nickname、email、password、family_name、family_name_kana、first_name、first_name_kana、birthday     
-  validates :nickname,               presence: true
-  validates :email,     presence: true, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i } # メールアドレスの正規表現 (メールアドレスは一意性であり、@を含む)
-  validates :encrypted_password,     presence: true, length: { minimum: 7 } # 文字数の正規表現 (パスワードは、6文字以上で半角英数字混合での入力が必須。パスワードとパスワード（確認用）は、値の一致が必須)
-  validates :family_name,            presence: true, format: {with: /\A[ぁ-んァ-ン一-龥]/ } # ユーザー本名全角の正規表現 (全角（漢字・ひらがな・カタカナ）で入力)
-  validates :family_name_kana,       presence: true, format: {with: /\A[ァ-ヶー－]+\z/ } # フリガナ全角の正規表現(全角（カタカナ）で入力)
-  validates :first_name,             presence: true, format: {with: /\A[ぁ-んァ-ン一-龥]/ } # ユーザー本名全角の正規表現（名字と一緒）
-  validates :first_name_kana,        presence: true, format: {with: /\A[ァ-ヶー－]+\z/ } # フリガナ全角の正規表現（名字と一緒）
-  validates :birthday,               presence: true
+  # バリデーション内容の認識がしやすいようにコメント記載
+  # 必須項目：nickname、email、password、family_name、family_name_kana、first_name、first_name_kana、birthday
+  with_options presence: true do 
+    validates :nickname
+    validates :birthday               
+    # ユーザー本名全角の正規表現 (全角（漢字・ひらがな・カタカナ）で入力)
+    with_options format: {with: /\A[ぁ-んァ-ン一-龥]/ } do
+      validates :family_name 
+      validates :first_name
+    end
+    # フリガナ全角の正規表現(全角（カタカナ）で入力)
+    with_options format:  {with: /\A[ァ-ヶー－]+\z/ } do
+      validates :family_name_kana
+      validates :first_name_kana
+    end
+  end
+  # メールアドレスの正規表現 (メールアドレスは一意性であり、@を含む)
+  validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i } 
+  # パスワードの半角英数混合(6文字以上)の正規表現
+  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])\w{6,}\z/
+  validates :password, format: { with: VALID_PASSWORD_REGEX }
 end
