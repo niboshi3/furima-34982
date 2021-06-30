@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before do
-    @user = FactoryBot.build(:user) # Userのインスタンス生成
+    @user = FactoryBot.build(:user) 
   end
 
   describe 'ユーザー新規登録' do
@@ -89,7 +89,7 @@ RSpec.describe User, type: :model do
         @user.save
         another_user = FactoryBot.build(:user, email: @user.email)
         another_user.valid?
-        expect(another_user.errors.full_messages).to include('Email has already been taken')
+        expect(another_user.errors.full_messages).to include("Email has already been taken")
       end
 
       it 'passwordとpassword_confirmationが不一致では登録できないこと' do
@@ -104,6 +104,27 @@ RSpec.describe User, type: :model do
         @user.password_confirmation = '123bb'
         @user.valid?
         expect(@user.errors.full_messages).to include('Password is too short (minimum is 6 characters)')
+      end
+
+      it 'passwordが半角英字のみでは登録できない' do
+        @user.password = 'aaabbb'
+        @user.password_confirmation = 'aaabbb'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'passwordが半角数字のみではでは登録できない' do
+        @user.password = '123456'
+        @user.password_confirmation = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
+      end
+
+      it 'passwordが全角ではでは登録できない' do
+        @user.password = '１２３ABC'
+        @user.password_confirmation = '１２３ABC'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("Password is invalid")
       end
 
       it 'family_nameが全角（漢字・ひらがな・カタカナ）でないと登録できない' do
