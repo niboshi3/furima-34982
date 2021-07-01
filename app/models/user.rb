@@ -10,19 +10,18 @@ class User < ApplicationRecord
     validates :nickname
     validates :birthday               
     # ユーザー本名全角の正規表現 (全角（漢字・ひらがな・カタカナ）で入力)
-    with_options format: {with: /\A[ぁ-んァ-ン一-龥]/ } do
+    with_options format: {with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/} do
       validates :family_name 
       validates :first_name
     end
     # フリガナ全角の正規表現(全角（カタカナ）で入力)
-    with_options format:  {with: /\A[ァ-ヶー－]+\z/ } do
+    with_options format:  {with: /\A[ァ-ヶー－]+\z/} do
       validates :family_name_kana
       validates :first_name_kana
     end
   end
   # メールアドレスの正規表現 (メールアドレスは一意性であり、@を含む)
-  validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i } 
-  # パスワードの半角英数混合(6文字以上)の正規表現
-  VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])\w{6,}\z/
-  validates :password, format: { with: VALID_PASSWORD_REGEX }
+  validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i} 
+  # パスワードの半角英数のみ混合の正規表現
+  validates :password, format: {with: /(?=.*[a-z])(?=.*\d)[a-z\d]{6,}/i}
 end
