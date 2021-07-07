@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :items
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -24,4 +26,6 @@ class User < ApplicationRecord
   validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i} 
   # パスワードの半角英数のみ混合の正規表現
   validates :password, format: {with: /(?=.*[a-z])(?=.*\d)[a-z\d]{6,}/i}
+
 end
+
