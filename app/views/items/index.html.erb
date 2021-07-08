@@ -130,10 +130,10 @@
     <ul class='item-lists'>
       
       <%# 出品された商品一覧表示 %>
-      <% if Item.exists? %>
+      <% if @items.exists? %>
         <% @items.each do |item| %>
           <li class='list'>
-            <%= link_to items_path(item.id),method: :get do %>
+            <%#= link_to items_path(item.id),method: :get do %>
             <div class='item-img-content'>
               <%= image_tag item.image, class: "item-img" %>
 
@@ -158,7 +158,7 @@
                 </div>
               </div>
             </div>
-            <% end %>
+            <%# end %>
           </li>
         <% end %>
         <%# 出品された商品一覧表示 %>
