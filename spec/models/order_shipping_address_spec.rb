@@ -11,7 +11,7 @@ RSpec.describe OrderShippingAddress, type: :model do
 
 
     context '商品購入できるとき' do
-      it 'price,postal_code,prefecture_id,municipality,address,telephone_numberが存在すれば購入できる' do
+      it 'postal_code,prefecture_id,municipality,address,telephone_number,tokenが存在すれば購入できる' do
         expect(@order_shipping_address).to be_valid
       end
       it 'ビル名がなくても購入できる' do
@@ -27,32 +27,27 @@ RSpec.describe OrderShippingAddress, type: :model do
     end
 
     context '商品購入できないとき' do
-      it "priceが空では保存ができないこと" do
-        @order_shipping_address.price = nil
-        @order_shipping_address.valid?
-        expect(@order_shipping_address.errors.full_messages).to include("Price can't be blank")
-      end
-      it '郵便番号がないと登録できない' do
+      it '郵便番号がないと購入できない' do
         @order_shipping_address.postal_code = nil
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Postal code can't be blank")
       end
-      it '郵便番号にハイフンがないと登録できない' do
+      it '郵便番号にハイフンがないと購入できない' do
         @order_shipping_address.postal_code = '1234567'
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
       end
-      it '都道府県がないと登録できない' do
+      it '都道府県がないと購入できない' do
         @order_shipping_address.prefecture_id = ''
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Prefecture can't be blank")
       end
-      it '都道府県が未選択の場合は登録できない' do
+      it '都道府県が未選択の場合は購入できない' do
         @order_shipping_address.prefecture_id = 1
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Prefecture can't be blank")
       end
-      it '市区村町がないと登録できない' do
+      it '市区村町がないと購入できない' do
         @order_shipping_address.municipality = ''
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Municipality can't be blank")
@@ -67,20 +62,26 @@ RSpec.describe OrderShippingAddress, type: :model do
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Telephone number can't be blank")
       end
-      it '電話番号が11桁以上では登録できない' do
+      it '電話番号が11桁以上では購入できない' do
         @order_shipping_address.telephone_number = '000123456789'
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
-      it '電話番号が数字ではないと登録できない' do
+      it '電話番号が数字ではないと購入できない' do
         @order_shipping_address.telephone_number = 'abcdefg'
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
-      it '電話番号にハイフンがあると登録できない' do
+      it '電話番号にハイフンがあると購入できない' do
         @order_shipping_address.telephone_number = '090-123-456'
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
+      end
+
+      it "tokenが空では購入できないこと" do
+        @order_shipping_address.token = nil
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
