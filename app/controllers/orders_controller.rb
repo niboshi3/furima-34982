@@ -7,6 +7,9 @@ class OrdersController < ApplicationController
     if @item.user_id == current_user.id || @item.order!= nil
       return redirect_to root_path
     end
+    unless user_signed_in?
+      redirect_to user_session_path
+    end
   end
 
   def new
