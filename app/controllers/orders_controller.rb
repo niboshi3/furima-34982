@@ -1,23 +1,15 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!, except: :index
+  before_action :authenticate_user!
+  before_action :search_params , only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @order_shipping_address = OrderShippingAddress.new
     if @item.user_id == current_user.id || @item.order!= nil
       return redirect_to root_path
     end
-    unless user_signed_in?
-      redirect_to user_session_path
-    end
-  end
-
-  def new
-    @order_shipping_address = OrderShippingAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_shipping_address = OrderShippingAddress.new(order_params)
     if @order_shipping_address.valid?
       pay_item
@@ -30,6 +22,9 @@ class OrdersController < ApplicationController
 
 
   private
+  def search_params
+    @item = Item.find(params[:item_id])
+  end
 
   def order_params
     params.require(:order_shipping_address).permit(:postal_code, :prefecture_id, :municipality, :address, :building, :telephone_number, :price ).merge(user_id: current_user.id,item_id: @item.id,token: params[:token])

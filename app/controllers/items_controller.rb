@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:edit, :show, :update, :destroy]
   before_action :set_security, only: [:edit, :update, :destroy]
   
@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
   end
 
   def edit  
-    if @item.user_id == current_user.id || @item.order!= nil
+    if  @item.order!= nil
       return redirect_to root_path
     end
   end
