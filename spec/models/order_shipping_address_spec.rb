@@ -77,11 +77,30 @@ RSpec.describe OrderShippingAddress, type: :model do
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
       end
-
+      it '電話番号が全角数字だと購入できない' do
+        @order_shipping_address.telephone_number = '０９０-１２３-５６７'
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
+      end
+      it '電話番号が9桁以上だと購入できない' do
+        @order_shipping_address.telephone_number = '090-123-4567'
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Telephone number is invalid")
+      end
       it "tokenが空では購入できないこと" do
         @order_shipping_address.token = nil
         @order_shipping_address.valid?
         expect(@order_shipping_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it "user_idが空では購入できないこと" do
+        @order_shipping_address.user_id = nil
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("User can't be blank")
+      end
+      it "item_idが空では購入できないこと" do
+        @order_shipping_address.item_id = nil
+        @order_shipping_address.valid?
+        expect(@order_shipping_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
