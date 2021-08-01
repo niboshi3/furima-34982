@@ -25,9 +25,7 @@ class ItemsController < ApplicationController
   end
 
   def edit  
-    if  @item.order!= nil
-      return redirect_to root_path
-    end
+    
   end
 
   def update
@@ -54,7 +52,7 @@ class ItemsController < ApplicationController
   end
 
   def set_security
-    unless current_user.id == @item.user.id
+    if current_user.id == @item.user.id || @item.order= nil
       redirect_to action: :index
     end
   end
