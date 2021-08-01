@@ -17,7 +17,7 @@
 ### Association
 
 - has_many :items
-- has_many :oders
+- has_many :orders
 
 
 
@@ -38,7 +38,7 @@
 ### Association
 
 - belongs_to :user
-- has_one :oder
+- has_one :order
 
 
 
@@ -74,7 +74,7 @@
 
 ### Association
 
-- belongs_to :oder
+- belongs_to :order
 
 
  ~~## commentsテーブル（コメント※今回は必須実装ではない~~ 
