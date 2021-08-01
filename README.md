@@ -17,7 +17,7 @@
 ### Association
 
 - has_many :items
-- has_many :purchases
+- has_many :orders
 
 
 
@@ -38,12 +38,12 @@
 ### Association
 
 - belongs_to :user
-- has_one :purchase
+- has_one :order
 
 
 
 
-## purchases テーブル（購入情報）
+## orders テーブル（購入情報）
 
 | Column              | Type       | Options                         |
 | ------------------- | ---------- | --------------------------------|
@@ -69,12 +69,12 @@
 | address              | string     | null: flase                      |
 | building             | string     |                                  |
 | telephone_number     | string     | null: flase                      |
-| purchase             | references | null: false, foreign_key: true   |
+| order                | references | null: false, foreign_key: true   |
 
 
 ### Association
 
-- belongs_to :purchase
+- belongs_to :order
 
 
  ~~## commentsテーブル（コメント※今回は必須実装ではない~~ 
@@ -82,9 +82,9 @@
 ~~| Column               | Type       | Options                          |
 | -------------------- | ---------- | ---------------------------------|
 | comment              | text       | null: flase                      |
-| purchase             | references | foreign_key: true                |~~  
+| order             | references | foreign_key: true                |~~  
 
 
  ~~### Association~~ 
 
- ~~- belongs_to :purchase~~ 
+ ~~- belongs_to :order~~ 

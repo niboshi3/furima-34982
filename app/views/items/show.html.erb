@@ -9,13 +9,13 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image, class: "item-img" %>
-      <%# 商品が売れている場合は、sold outを表示 %>
-      <%#= unless @purchases.blank? %>
+
+      <% if @item.order.present? %>
         <div class='sold-out'>
           <span>Sold Out!!</span>
         </div>
-      <%# end %>
-      <%# //商品が売れている場合は、sold outを表示 %>
+      <% end %>
+
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -26,8 +26,7 @@
       </span>
     </div>
 
-    <%# ログインをしている （且つ 商品が出品中(売却されてない）である → 購入機能実装時に実装） %>
-    <% if user_signed_in? %>
+    <% if user_signed_in? && @item.order.blank? %>
       <%# ログインしているユーザーと出品しているユーザーが、同一人物の場合 %>
       <% if  current_user.id == @item.user_id%>
         <%= link_to "商品の編集", edit_item_path(@item.id), method: :get, class: "item-red-btn" %>
@@ -35,7 +34,7 @@
         <%= link_to "削除", item_path(@item.id), method: :delete, class:"item-destroy" %>
       <% else %>
       <%# ログインしているユーザーと出品しているユーザーが、同一人物ではない場合 %>
-        <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+        <%= link_to "購入画面に進む", item_orders_path(@item.id) ,class:"item-red-btn"%>
       <% end %>
     <% end %>
 
@@ -105,9 +104,9 @@
       後ろの商品 ＞
     </a>
   </div>
-  <%# 詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
+  <%# 商品のカテゴリー名 %>
   <a href="#" class="another-item"><%= @item.category.name %>をもっと見る</a>
-  <%# //詳細ページで表示されている商品のカテゴリー名を表示しましょう %>
+  <%# //商品のカテゴリー名 %>
 </div>
 
 <%= render "shared/footer" %>
