@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
   end
 
   def set_security
-    if current_user.id == @item.user.id || @item.order== nil
+    if current_user.id != @item.user.id || @item.order != nil
       redirect_to action: :index
     end
   end
